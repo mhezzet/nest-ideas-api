@@ -11,7 +11,7 @@ import { plainToClass } from 'class-transformer';
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
-    if (this.isEmbty(value)) {
+    if (typeof value === 'object' && this.isEmbty(value)) {
       throw new HttpException(
         'validation error: no body',
         HttpStatus.BAD_REQUEST,
