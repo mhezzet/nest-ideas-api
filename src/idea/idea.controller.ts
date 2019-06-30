@@ -12,7 +12,7 @@ import { IdeaService } from './idea.service';
 import { IdeaDTO } from './idea.dto';
 import { ValidationPipe } from '../common/validation.pipe';
 
-@Controller('idea')
+@Controller('api/idea')
 export class IdeaController {
   constructor(private readonly ideaService: IdeaService) {}
 
