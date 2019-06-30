@@ -5,12 +5,13 @@ import {
   Column,
   BeforeInsert,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import * as bycrpt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserRO } from './dto/userRo.dto';
 import { IdeaEntity } from 'src/idea/idea.entity';
-import { type } from 'os';
 
 @Entity('user')
 export class UserEntity {
@@ -29,8 +30,12 @@ export class UserEntity {
   @Column('text')
   password: string;
 
-  @OneToMany(type => IdeaEntity, idea => idea.author)
+  @OneToMany(() => IdeaEntity, idea => idea.author)
   ideas: IdeaEntity[];
+
+  @ManyToMany(() => IdeaEntity, { cascade: true })
+  @JoinTable()
+  bookmarks: IdeaEntity[];
 
   @BeforeInsert()
   async hashPassword() {
@@ -39,8 +44,8 @@ export class UserEntity {
   }
 
   toResponseObject(showToken: boolean = true) {
-    const { id, username, created, token, ideas } = this;
-    const returnObject: UserRO = { id, username, created, ideas };
+    const { id, username, created, token, ideas, bookmarks } = this;
+    const returnObject: UserRO = { id, username, created, ideas, bookmarks };
     if (showToken) {
       returnObject.token = token;
     }

@@ -48,7 +48,7 @@ export class IdeaService {
     if (!idea) {
       throw new HttpException('no such an idea', HttpStatus.NOT_FOUND);
     }
-    if (idea.author.id != userID) {
+    if (idea.author.id !== userID) {
       throw new HttpException(
         'its not your idea to update',
         HttpStatus.FORBIDDEN,
@@ -72,7 +72,7 @@ export class IdeaService {
       throw new HttpException('no such an idea', HttpStatus.NOT_FOUND);
     }
 
-    if (idea.author.id != userID) {
+    if (idea.author.id !== userID) {
       throw new HttpException(
         'its not your idea to delete',
         HttpStatus.FORBIDDEN,
